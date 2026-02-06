@@ -13,10 +13,12 @@
         .pantalla { min-height: 100vh; width: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; text-align: center; position: relative; }
         .active { display: flex; }
         .content-container { width: 100%; max-width: 500px; }
+        @media (min-width: 768px) { .content-container { max-width: 900px; } }
         .btn-fbi { background: #1a1a1a; border: 1px solid #444; padding: 20px; width: 100%; max-width: 400px; color: white; text-transform: uppercase; font-weight: bold; cursor: pointer; margin-top: 15px; font-size: 1.1rem; transition: 0.3s; }
         .btn-fbi:hover { background: var(--fbi-red); transform: scale(1.02); border-color: white; }
+        .stamp { font-family: 'Special Elite'; border: 4px solid var(--fbi-red); color: var(--fbi-red); padding: 10px; text-transform: uppercase; transform: rotate(-15deg); position: absolute; opacity: 0.4; pointer-events: none; z-index: 10; }
+        .img-doc { border: 10px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .invitacion-box { background: #e2e2e2; color: #1a1a1a; padding: 40px; border: 2px solid #333; box-shadow: 15px 15px 0px rgba(0,0,0,0.5); width: 100%; }
-        .img-doc { border: 10px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.8); grayscale: 100%; }
     </style>
 </head>
 <body>
@@ -24,120 +26,268 @@
     <audio id="player" preload="auto"></audio>
 
     <div class="folder-bg">
-        <div id="skipBtn" class="fixed bottom-8 right-8 text-xs text-zinc-500 underline z-50 cursor-pointer hidden bg-black/60 p-2" onclick="irAPantalla('resumen')">[ OMITIR HISTORIA ]</div>
+        
+        <div id="skipBtn" class="fixed bottom-8 right-8 text-xs md:text-sm text-zinc-500 underline z-50 cursor-pointer hidden bg-black/60 p-2" onclick="irAPantalla('resumen')">
+            [ OMITIR HISTORIA E IR AL RESUMEN ]
+        </div>
 
         <section id="p1" class="pantalla active">
             <div class="content-container">
-                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500" class="w-64 h-auto img-doc rotate-2 mb-8 mx-auto grayscale">
-                <h1 class="text-2xl font-bold text-red-700 uppercase">OPERACIÓN: SIN FIANZA</h1>
-                <p class="mt-6 text-sm italic">"Todo parecía un cuento de hadas... El plan era perfecto."</p>
+                <div class="stamp md:text-4xl" style="top:5%; right:5%">EXPEDIENTE #2810</div>
+                <img src="img/foto_romantica.jpg" class="w-64 md:w-96 h-auto img-doc rotate-2 mb-8 mx-auto grayscale">
+                <h1 class="text-2xl md:text-5xl font-bold text-red-700 uppercase">El Inicio (El Engaño)</h1>
+                <p class="mt-6 text-sm md:text-xl italic">"Todo parecía un cuento de hadas... El plan era perfecto."</p>
                 <button class="btn-fbi" onclick="irAPantalla(2)">Analizar Evidencia</button>
             </div>
         </section>
 
         <section id="p2" class="pantalla">
             <div class="content-container">
-                <div class="bg-black aspect-video mb-8 border-2 border-red-900">
-                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/TU_ID_VIDEO" frameborder="0"></iframe>
+                <div class="bg-black aspect-video mb-8 border-2 border-red-900 overflow-hidden relative">
+                    <iframe id="videoSecuestro" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
-                <h2 class="text-xl font-bold text-red-600 mb-4 uppercase">El Crimen</h2>
+                <h2 class="text-xl md:text-4xl font-bold text-red-600 mb-4">EL CRIMEN</h2>
+                <p class="text-sm md:text-lg italic">"Pero alguien decidió asegurar el contrato. ¡NADIE FUE OBLIGADO! (Bueno, la fianza era muy alta y nadie la pagó)."</p>
                 <button class="btn-fbi" onclick="irAPantalla(3)">Ver Sentencia</button>
+            </div>
+        </section>
+
+        <section id="p3" class="pantalla">
+            <div class="content-container">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-10 -rotate-2">
+                    <div class="bg-white p-2 shadow-xl text-4xl">⛓️</div>
+                    <div class="bg-white p-2 shadow-xl text-4xl">🥀</div>
+                    <div class="bg-white p-2 shadow-xl text-4xl">💍</div>
+                    <div class="bg-white p-2 shadow-xl text-4xl">⚰️</div>
+                </div>
+                <h2 class="text-xl md:text-4xl font-bold text-red-600 mb-6 uppercase">La Condena</h2>
+                <p class="text-sm md:text-xl px-4">"Ya que no hubo rescate, la secuestradora ha decidido que la condena será: ¡BODA! Pero antes, daremos el último adiós a sus vidas sociales."</p>
+                <button class="btn-fbi" onclick="irAPantalla(4)">Plan de Cooperación</button>
+            </div>
+        </section>
+
+        <section id="p4" class="pantalla">
+            <div class="content-container">
+                <img src="img/foto_brindis.jpg" class="w-full md:max-w-2xl h-64 md:h-96 object-cover img-doc mb-8 mx-auto">
+                <h2 class="text-xl md:text-4xl font-bold text-red-600 mb-4 uppercase">Cooperación (El Regalo)</h2>
+                <div class="bg-zinc-900 p-8 text-left space-y-4 border-l-8 border-red-700">
+                    <p class="text-sm md:text-lg"><strong>Fondo de Rescate:</strong> Como el rescate fue elevado, necesitamos de su ayuda para capitalizar esta nueva etapa.</p>
+                    <p class="text-xs md:text-base border-t border-zinc-700 pt-4 font-bold">BANCO: [Tu Banco] | CLABE: 0000 0000 0000 0000</p>
+                    <p class="text-[10px] text-zinc-500 uppercase">Se acepta efectivo (Preferible para la luna de miel).</p>
+                </div>
+                <button class="btn-fbi" onclick="irAPantalla(5)">Cuartel General</button>
+            </div>
+        </section>
+
+        <section id="p5" class="pantalla">
+            <div class="content-container">
+                <div class="invitacion-box text-left">
+                    <h2 class="text-xl md:text-4xl font-bold text-red-700 mb-6 border-b-4 border-black pb-4 uppercase">Cuartel General</h2>
+                    <div class="space-y-4 text-sm md:text-xl">
+                        <p>📍 LUGAR: <strong class="val-lugar">Cargando...</strong></p>
+                        <p>🗓️ FECHA: <strong class="val-fecha">Cargando...</strong></p>
+                        <p>🔑 CONTRASEÑA: <span class="italic">"Vengo a pagar la fianza del novio"</span></p>
+                        <div class="w-full h-40 bg-zinc-300 flex items-center justify-center border-2 border-dashed border-black mt-4">
+                            <a href="TU_LINK_GOOGLE_MAPS" target="_blank" class="text-blue-700 underline font-bold">ABRIR GOOGLE MAPS</a>
+                        </div>
+                    </div>
+                    <button class="btn-fbi !bg-black w-full mt-8" onclick="irAPantalla(6)">Registro Final</button>
+                </div>
             </div>
         </section>
 
         <section id="p6" class="pantalla">
             <div class="invitacion-box !bg-white !max-w-2xl text-left">
-                <h2 class="text-xl font-bold border-b-2 border-black mb-6 text-center">FICHA DE CÓMPLICE</h2>
-                <p class="text-sm mb-2">OBJETIVO: <span class="nombreInvitado font-bold uppercase text-red-700">Cargando...</span></p>
-                <p class="text-sm mb-4">PASES DISPONIBLES: <span class="pasesInvitado font-bold">...</span></p>
-                
-                <form id="formP6" class="space-y-4">
-                    <select id="adultosP6" class="w-full border-2 border-black p-3 font-bold"></select>
-                    <input type="text" id="cancionP6" class="w-full border-2 border-black p-3 text-xs" placeholder="SUGERENCIA DJ">
-                    <button type="button" onclick="enviarRSVP('P6')" class="w-full bg-red-700 text-white py-4 font-bold uppercase">¡Confirmar Misión!</button>
-                    <button type="button" onclick="rechazar('P6')" class="w-full text-zinc-400 text-[10px] mt-2">No podré asistir</button>
-                </form>
-                <div id="statusP6" class="hidden text-center p-6 bg-black text-green-500 font-mono">REGISTRANDO EN BASE DE DATOS...</div>
+                <h2 class="text-xl md:text-3xl font-bold border-b-2 border-black mb-6 text-center uppercase">Ficha Policial</h2>
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <img src="img/foto_mugshot.jpg" class="w-48 md:w-64 h-auto grayscale border-4 border-black">
+                    <div class="w-full space-y-4">
+                        <p class="text-sm md:text-lg">OBJETIVO: <span class="uppercase font-bold val-nombre">Cargando...</span></p>
+                        <p class="text-sm md:text-lg">PASES: <strong class="val-pases">0</strong> ADULTOS</p>
+                        <form id="formP6" class="space-y-3">
+                            <select id="adultosP6" class="w-full border-2 border-black p-3 font-bold bg-zinc-50">
+                                </select>
+                            <input type="text" id="cancionP6" class="w-full border-2 border-black p-3 uppercase text-xs" placeholder="Canción para el DJ">
+                            <button type="button" onclick="enviarRSVP('P6')" class="w-full bg-red-700 text-white py-4 font-bold uppercase hover:bg-red-800 transition">¡Cuenten con mi astucia!</button>
+                            <button type="button" onclick="rechazar('P6')" class="w-full bg-zinc-300 text-black py-2 font-bold text-[10px] uppercase">Me dio miedo la camioneta</button>
+                        </form>
+                        <div id="statusP6" class="hidden text-center p-6 bg-black text-green-500 font-mono animate-pulse">REGISTRANDO...</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="resumen" class="pantalla">
-            <div class="invitacion-box !bg-[#1a1a1a] !text-white !border-red-700">
-                <h2 class="text-2xl font-bold text-red-600 mb-4">RESUMEN OPERATIVO</h2>
-                <p>📍 Lugar: Rancho Etiqueta Negra</p>
-                <p>🗓️ Fecha: 28 de Octubre, 2026</p>
-                <button class="btn-fbi" onclick="irAPantalla(6)">Ir a Confirmar</button>
+            <div class="invitacion-box !bg-[#1a1a1a] !text-white !border-red-700 !max-w-4xl text-left">
+                <h1 class="text-2xl md:text-5xl font-bold text-red-600 mb-8 border-b-2 border-red-900 pb-4 uppercase">Resumen del Operativo</h1>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-4 text-sm md:text-lg">
+                        <p>📍 <strong>LUGAR:</strong> <span class="val-lugar">...</span></p>
+                        <p>🗓️ <strong>FECHA:</strong> <span class="val-fecha">...</span></p>
+                        <p>🔑 <strong>CONTRASEÑA:</strong> Pagar la fianza</p>
+                        <a href="TU_LINK_GOOGLE_MAPS" class="text-blue-400 underline italic">Ver coordenadas GPS</a>
+                    </div>
+                    <div class="bg-white text-black p-6 rounded shadow-xl">
+                        <p class="text-xs mb-4 uppercase font-bold border-b border-black">Confirmación de Cómplice</p>
+                        <p class="text-xs mb-4">Invitado: <span class="val-nombre">...</span> | Pases: <span class="val-pases">0</span></p>
+                        <form id="formResumen" class="space-y-3">
+                            <select id="adultosResumen" class="w-full border border-black p-3 bg-zinc-100 font-bold">
+                                </select>
+                            <input type="text" id="cancionResumen" class="w-full border border-black p-3 text-xs" placeholder="Canción">
+                            <button type="button" onclick="enviarRSVP('Resumen')" class="w-full bg-red-700 text-white py-4 font-bold uppercase">Confirmar Misión</button>
+                            <button type="button" onclick="rechazar('Resumen')" class="w-full text-[10px] uppercase mt-2 text-zinc-500 underline text-center block mx-auto">No podré asistir</button>
+                        </form>
+                        <div id="statusResumen" class="hidden text-center p-4 bg-black text-green-500 font-mono text-xs">ACCEDIENDO AL SERVIDOR...</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="pFinal" class="pantalla">
             <div class="content-container">
-                <div class="invitacion-box !bg-black !text-white border-red-600 border-4">
-                    <h2 class="text-2xl font-bold text-red-600 mb-4">¡MISIÓN REGISTRADA!</h2>
-                    <p id="textoFinal">El prisionero está siendo trasladado. Nos vemos en la sentencia.</p>
+                <div class="invitacion-box !bg-black !text-white border-red-600 border-4 shadow-[0_0_40px_rgba(176,28,28,0.4)]">
+                    <h2 id="tituloFinal" class="text-xl md:text-4xl font-bold text-red-600 mb-6 uppercase tracking-widest">TRASLADO EN CURSO</h2>
+                    <div class="bg-zinc-900 aspect-video mb-6 border-2 border-red-900 relative">
+                        <iframe id="videoFinal" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+                        <div class="absolute top-2 left-2 bg-red-600 text-[10px] px-2 py-1 animate-pulse font-bold">REC ● LIVE</div>
+                    </div>
+                    <div class="text-left space-y-4">
+                        <p id="textoFinal" class="text-sm md:text-xl font-mono leading-relaxed">
+                            Cómplice registrado. El prisionero está siendo trasladado bajo máxima seguridad hacia el <strong>Rancho Etiqueta Negra</strong>.
+                        </p>
+                        <div class="bg-zinc-800 p-4 border-l-4 border-red-600 italic text-[10px] md:text-sm">
+                            "No hay fianza, no hay rescate... solo una sentencia de amor eterno."
+                        </div>
+                        <p class="text-center font-bold text-red-500 text-lg md:text-3xl pt-6 animate-bounce">¡NOS VEMOS EN LA SENTENCIA!</p>
+                    </div>
                 </div>
+                <p class="text-[10px] text-zinc-600 mt-6 font-bold uppercase">Conexión Encriptada - Mildred & Antonio 2026</p>
             </div>
         </section>
+
     </div>
 
     <script>
-        // --- PEGA AQUÍ TU URL DE GOOGLE ---
-        const GOOGLE_SCRIPT_URL ="https://script.google.com/macros/s/AKfycbxh61Tf5UKky24jMJGU5dPWv8a7D8Rc2Selkj9U_d0_HBL6KkGLixqNqUEn8kp0IAoxxw/exec"; 
+        // --- CONFIGURACIÓN DE RUTAS ---
+        const WEB_APP_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT"; // Pega tu URL /exec aquí
         
-        let nombreGlobal = "";
+        const config = {
+            videoSecuestro: "https://www.youtube.com/embed/ID_VIDEO_1?autoplay=1&mute=1",
+            videoFinal: "https://www.youtube.com/embed/ID_VIDEO_2?autoplay=1",
+            lugar: "Rancho Etiqueta Negra",
+            fecha: "28 de Octubre de 2026"
+        };
 
-        async function cargarDatos() {
+        const playlist = {
+            1: "audio/cancion1.mp3",
+            2: "audio/cancion2.mp3",
+            3: "audio/cancion3.mp3",
+            4: "audio/cancion4.mp3",
+            5: "audio/cancion5.mp3",
+            6: "audio/cancion6.mp3",
+            'resumen': "audio/cancion5.mp3",
+            'pFinal': "audio/cancion6.mp3"
+        };
+
+        // --- LÓGICA DE DATOS ---
+        let datosInvitado = { nombre: "Invitado", pases: 1 };
+
+        async function cargarInvitado() {
             const params = new URLSearchParams(window.location.search);
-            const n = params.get('n') || "Invitado_Especial";
+            const nombreUrl = params.get('n') || "Invitado_VIP";
             
             try {
-                const res = await fetch(`${GOOGLE_SCRIPT_URL}?n=${n}`);
-                const data = await res.json();
-                
-                nombreGlobal = data.nombre;
-                document.querySelectorAll('.nombreInvitado').forEach(el => el.innerText = data.nombre);
-                document.querySelectorAll('.pasesInvitado').forEach(el => el.innerText = data.pases);
-                
-                const sel = document.getElementById('adultosP6');
-                for(let i=0; i<=data.pases; i++) {
+                const response = await fetch(`${WEB_APP_URL}?n=${nombreUrl}`);
+                const data = await response.json();
+                datosInvitado = data;
+                actualizarUI();
+            } catch (e) {
+                console.error("Error cargando invitado", e);
+                actualizarUI(); // Usa valores por defecto si falla
+            }
+        }
+
+        function actualizarUI() {
+            document.querySelectorAll('.val-nombre').forEach(el => el.innerText = datosInvitado.nombre);
+            document.querySelectorAll('.val-pases').forEach(el => el.innerText = datosInvitado.pases);
+            document.querySelectorAll('.val-lugar').forEach(el => el.innerText = config.lugar);
+            document.querySelectorAll('.val-fecha').forEach(el => el.innerText = config.fecha);
+
+            // Llenar selectores de pases
+            [document.getElementById('adultosP6'), document.getElementById('adultosResumen')].forEach(select => {
+                select.innerHTML = "";
+                for(let i=0; i <= datosInvitado.pases; i++) {
                     let opt = document.createElement('option');
-                    opt.value = i; opt.innerText = i + " Persona(s)";
-                    sel.appendChild(opt);
+                    opt.value = i;
+                    opt.innerText = `${i} Persona(s) confirman`;
+                    select.appendChild(opt);
                 }
-            } catch(e) { console.error("Error", e); }
+            });
+        }
+
+        // --- NAVEGACIÓN ---
+        const player = document.getElementById('player');
+
+        function gestionarAudio(n) {
+            if(playlist[n]) {
+                player.src = playlist[n];
+                player.play().catch(() => console.log("Interacción requerida para audio"));
+            }
         }
 
         function irAPantalla(n) {
             document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('active'));
             const target = (typeof n === 'number') ? 'p' + n : n;
-            document.getElementById(target).classList.add('active');
-            document.getElementById('skipBtn').classList.toggle('hidden', n === 1 || n === 'pFinal');
+            const el = document.getElementById(target);
+            el.classList.add('active');
+            document.querySelector('.folder-bg').scrollTop = 0;
+            
+            gestionarAudio(n);
+
+            if(n === 2) document.getElementById('videoSecuestro').src = config.videoSecuestro;
+            if(n === 'pFinal') document.getElementById('videoFinal').src = config.videoFinal;
+
+            if (n === 'pFinal') {
+                const titulo = document.getElementById('tituloFinal');
+                const texto = document.getElementById('textoFinal');
+                if (window.asistenciaConfirmada) {
+                    titulo.innerText = "TRASLADO EN CURSO";
+                    texto.innerHTML = `Cómplice registrado. El prisionero está siendo trasladado bajo máxima seguridad. Prepárate para el operativo el ${config.fecha}.`;
+                } else {
+                    titulo.innerText = "EXPEDIENTE CERRADO";
+                    texto.innerHTML = "Has decidido no participar. El traslado continúa sin ti hacia el altar.";
+                }
+            }
+
+            document.getElementById('skipBtn').classList.toggle('hidden', n === 1 || n === 6 || n === 'pFinal' || n === 'resumen');
         }
 
-        function enviarRSVP(origen) {
-            const adultos = document.getElementById('adultos' + origen).value;
-            const cancion = document.getElementById('cancion' + origen).value;
+        async function enviarRSVP(origen, adultosForzados = null, cancionForzada = null) {
+            const adultos = adultosForzados !== null ? adultosForzados : document.getElementById('adultos' + origen).value;
+            const cancion = cancionForzada !== null ? cancionForzada : document.getElementById('cancion' + origen).value;
             
             document.getElementById('form' + origen).classList.add('hidden');
             document.getElementById('status' + origen).classList.remove('hidden');
 
-            fetch(`${GOOGLE_SCRIPT_URL}`, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({nombre: nombreGlobal, adultos: adultos, cancion: cancion})
-            }).then(() => {
-                irAPantalla('pFinal');
-            });
-        }
+            const url = `${WEB_APP_URL}?n=${encodeURIComponent(datosInvitado.nombre)}&pases_conf=${adultos}&cancion=${encodeURIComponent(cancion)}`;
 
-        function rechazar(origen) {
-            if(confirm("¿Abortar misión?")) {
-                // Lógica de rechazo aquí
+            try {
+                // Usamos no-cors para evitar problemas de seguridad simples
+                await fetch(url, { method: 'GET', mode: 'no-cors' });
+                window.asistenciaConfirmada = (parseInt(adultos) > 0);
+                irAPantalla('pFinal');
+            } catch (e) {
                 irAPantalla('pFinal');
             }
         }
 
-        window.onload = cargarDatos;
+        function rechazar(origen) {
+            if(confirm("¿Seguro que quieres abortar la misión?")) {
+                enviarRSVP(origen, 0, "NO ASISTIRÁ");
+            }
+        }
+
+        window.onload = cargarInvitado;
     </script>
 </body>
 </html>
